@@ -24,7 +24,7 @@ return require('packer').startup(function(use)
       }
    })
 
-   vim.cmd("colorscheme nightfox")
+   vim.cmd("colorscheme carbonfox")
 
    use {
       'nvim-treesitter/nvim-treesitter',
@@ -33,6 +33,7 @@ return require('packer').startup(function(use)
    use 'nvim-treesitter/playground'
    use "nvim-lua/plenary.nvim" -- don't forget to add this 
                               -- one if you don't have it yet!
+   --Commenting out harpoon it's breaking shit
    use {
       "ThePrimeagen/harpoon",
       branch = "harpoon2",
@@ -81,7 +82,5 @@ return require('packer').startup(function(use)
 
    -- Oil a file navigator
    use("stevearc/oil.nvim")
-
-
    
 end)
