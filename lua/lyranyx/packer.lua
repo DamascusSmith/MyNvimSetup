@@ -4,6 +4,8 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
+   -- Quality of Life
+
    -- Packer can manage itself
    use 'wbthomason/packer.nvim'
 
@@ -27,17 +29,61 @@ return require('packer').startup(function(use)
       branch = "harpoon2",
       requires = { {"nvim-lua/plenary.nvim"} }
    }
-   use 'mbbill/undotree' --literally let's you do an undo tree
-   use 'tpope/vim-fugative' -- greatest git interface for neovim
+   use ('mbbill/undotree') --literally let's you do an undo tree
+   use ('tpope/vim-fugitive') -- greatest git interface for neovim
 
-   --[[ 
-   require("packer").startup(function()
-      use({
-         "stevearc/oil.nvim",
-         config = function()
-            require("oil").setup()
-         end,
-      })
-   end) 
-   --]]
+   -- LSP Stuff
+   use { 'neovim/nvim-lspconfig' }
+   use { 'hrsh7th/nvim-cmp' }
+   use { 'hrsh7th/cmp-nvim-lsp' }
+   use { 'L3MON4D3/LuaSnip' }
+   use { 'saadparwaiz1/cmp_luasnip' }
+   use { 'williamboman/mason.nvim' }
+   use { 'williamboman/mason-lspconfig.nvim' }
+
+   require('mason').setup()
+   require('mason-lspconfig').setup({
+      automatic_installation = true,
+      automatic_enable = true
+   })
+   require('luasnip.loaders.from_vscode').lazy_load()
+   
+   -- Code Snippets
+   local cmp = require('cmp')
+   cmp.setup({
+      snippet = {
+	    expand = function(args)
+	      require('luasnip').lsp_expand(args.body)
+	    end
+	  },
+
+	  mapping = { 
+	    ['<Tab>'] = cmp.mapping.select_next_item(),
+	    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+	    ['<CR>'] = cmp.mapping.confirm({select = false}),
+	  },
+
+	  sources = {
+	    { name = 'nvim_lsp' },
+	    { name = 'luasnip' },
+	    { name = 'buffer' },
+	  }
+	})
+
+   -- Oil a file navigator
+   use({
+      "stevearc/oil.nvim",
+      config = function()
+         require("oil").setup()
+      end,
+   })
+
+   require("oil").setup({
+      default_file_explorer = true,
+
+      columns = {
+         "icon",
+         "size",
+      }
+   })
 end)
