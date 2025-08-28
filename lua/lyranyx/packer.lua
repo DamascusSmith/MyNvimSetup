@@ -14,8 +14,17 @@ return require('packer').startup(function(use)
       -- or                            , branch = '0.1.x',
       requires = { {'nvim-lua/plenary.nvim'} }
    }
+   
+   -- Color Themes
+   use "EdenEast/nightfox.nvim"
 
-   use "EdenEast/nightfox.nvim" -- Packer
+   require("nightfox").setup({
+      options = {
+         transparent = false
+      }
+   })
+
+   vim.cmd("colorscheme nightfox")
 
    use {
       'nvim-treesitter/nvim-treesitter',
