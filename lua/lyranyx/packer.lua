@@ -80,19 +80,8 @@ return require('packer').startup(function(use)
 	})
 
    -- Oil a file navigator
-   use({
-      "stevearc/oil.nvim",
-      config = function()
-         require("oil").setup()
-      end,
-   })
+   use("stevearc/oil.nvim")
 
-   require("oil").setup({
-      default_file_explorer = true,
 
-      columns = {
-         "icon",
-         "size",
-      }
-   })
+   
 end)
